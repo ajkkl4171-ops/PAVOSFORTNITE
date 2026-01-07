@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fortnite V-Bucks Store</title>
+
+<style>
+:root{
+  --bg:#0a0e2a;
+  --panel:#11164a;
+  --card:#1a1f6b;
+  --accent:#ffd400;
+  --accent2:#4da3ff;
+  --text:#f5f7ff;
+  --muted:#aab0ff;
+  --border:rgba(255,255,255,.1);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,Segoe UI,Roboto,Arial;
+  background:linear-gradient(180deg,#0a0e2a,#050720);
+  color:var(--text);
+}
+.app{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  min-height:100vh;
+}
+.sidebar{
+  background:linear-gradient(180deg,#0e1340,#080b2a);
+  border-right:1px solid var(--border);
+  padding:24px;
+}
+.sidebar h1{
+  font-size:22px;
+  margin-bottom:10px;
+}
+.sidebar .tag{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#10156a;
+  margin-bottom:8px;
+  display:inline-block;
+  color:var(--muted);
+}
+.main{
+  padding:28px;
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.currency{
+  background:#0b103a;
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:10px 12px;
+  border-radius:10px;
+}
+.section{
+  margin-top:28px;
+}
+.section h2{
+  margin-bottom:12px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+.card{
+  background:linear-gradient(180deg,#1a1f6b,#14185a);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+}
+.card b{font-size:18px}
+.card .vb{
+  font-size:14px;
+  color:var(--muted);
+}
+.price{
+  margin:10px 0;
+  font-size:20px;
+  font-weight:900;
+  color:var(--accent);
+}
+.btn{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-weight:900;
+}
+.btn.buy{
+  background:linear-gradient(135deg,var(--accent),#ffef7a);
+  color:#000;
+}
+.panel{
+  background:#0b103a;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+}
+input,select{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#06092a;
+  color:var(--text);
+}
+.paybox{
+  display:none;
+  background:#06092a;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  margin-top:12px;
+}
+.footer{
+  margin-top:30px;
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h1>FORTNITE</h1>
+  <div class="tag">V-Bucks Store</div>
+  <div class="tag">Entrega manual</div>
+  <div class="tag">Pagos verificados</div>
+  <div class="tag">USD / MXN</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<div class="header">
+  <h2>Compra V-Bucks</h2>
+  <select id="currency" class="currency" onchange="render()">
+    <option value="MXN">Pesos MX</option>
+    <option value="USD">Dólares USD</option>
+  </select>
+</div>
+
+<!-- PACKS -->
+<div class="section">
+  <h2>Paquetes disponibles</h2>
+  <div id="packs" class="grid"></div>
+</div>
+
+<!-- PANEL -->
+<div class="section panel">
+  <h2>Registro</h2>
+  <input id="email" placeholder="Correo electrónico">
+
+  <h2 style="margin-top:20px">Carrito</h2>
+  Paquete: <b id="prod">—</b><br>
+  V-Bucks: <b id="vb">—</b><br>
+  Total: <b id="total">—</b>
+
+  <h2 style="margin-top:20px">Pago</h2>
+  <select id="method" onchange="showPay()">
+    <option value="">Selecciona método</option>
+    <option value="usdt">USDT</option>
+    <option value="btc">BTC</option>
+    <option value="mx">Transferencia / OXXO</option>
+  </select>
+
+  <div id="usdt" class="paybox">
+    USDT TRC20<br>
+    <b>TUT4ZqQYEv32oiUGC3pNmYBYEoUUGMm1eV</b>
+  </div>
+
+  <div id="btc" class="paybox">
+    BTC<br>
+    <b>1K6jsMAfJJMEQ6dPmJDV7CEZfDGHhsXznw</b>
+  </div>
+
+  <!-- EDITADO: TRANSFERENCIA + OXXO -->
+  <div id="mx" class="paybox">
+    <b>Transferencia BANREGIO</b><br>
+    CLABE: <b>058597000077868264</b><br>
+    Titular: <b>Gildardo Roman Guzman</b>
+
+    <div style="margin-top:12px"></div>
+
+    <b>Depósitos OXXO</b><br>
+    Tarjeta: <b>4741742995244707</b><br>
+    Titular: <b>Gildardo Roman Guzman</b>
+  </div>
+
+  <button class="btn buy" style="margin-top:16px" onclick="confirm()">
+    ✅ Ya realicé el pago
+  </button>
+</div>
+
+<div class="footer">
+  Envía el comprobante a <b>NAUSE627@OUTLOOK.COM</b><br>
+  Un administrador confirmará los V-Bucks
+</div>
+
+</div>
+</div>
+
+<script>
+const RATE=17;
+const PACKS=[
+ {n:"2,800 V-Bucks",v:2800,u:12.99},
+ {n:"5,000 V-Bucks",v:5000,u:19.99},
+ {n:"10,000 V-Bucks",v:10000,u:34.99},
+ {n:"13,500 V-Bucks",v:13500,u:44.99},
+ {n:"27,000 V-Bucks",v:27000,u:79.99}
+];
+let selected=null;
+
+function money(v,c){
+  return c==="USD" ? "$"+v.toFixed(2)+" USD" : "MXN $"+Math.round(v).toLocaleString();
+}
+
+function render(){
+  const c=document.getElementById("currency").value;
+  let h="";
+  PACKS.forEach(p=>{
+    const price=c==="USD"?p.u:p.u*RATE;
+    if(c==="MXN" && price<100) return;
+    h+=`
+      <div class="card">
+        <b>${p.n}</b>
+        <div class="vb">${p.v.toLocaleString()} V-Bucks</div>
+        <div class="price">${money(price,c)}</div>
+        <button class="btn buy" onclick="select('${p.n}',${p.v},${price},'${c}')">Elegir</button>
+      </div>`;
+  });
+  packs.innerHTML=h;
+}
+function select(n,v,p,c){
+  selected={n,v,p,c};
+  prod.textContent=n;
+  vb.textContent=v.toLocaleString();
+  total.textContent=money(p,c);
+}
+function showPay(){
+  ["usdt","btc","mx"].forEach(x=>document.getElementById(x).style.display="none");
+  const m=method.value;
+  if(m) document.getElementById(m).style.display="block";
+}
+function confirm(){
+  if(!email.value.includes("@")) return alert("Ingresa un correo válido");
+  if(!selected) return alert("Selecciona un paquete");
+  alert("Envía el comprobante a NAUSE627@OUTLOOK.COM");
+}
+render();
+</script>
+
+</body>
+</html>
